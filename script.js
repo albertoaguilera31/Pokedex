@@ -53,6 +53,6 @@ const setCardColor = types =>{
     pokeImg.style.backgroundSize= ' 5px, 5px';
 }
 
-renderPokemonTypes=types =>{
+/*renderPokemonTypes=types =>{
     pokeTypes.innerHTML
-}
+}*/
