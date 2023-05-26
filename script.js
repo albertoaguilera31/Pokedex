@@ -32,6 +32,7 @@ const searchPokemon = event =>{
     fetch(`https://pokeapi.co/api/v2/pokemon/${value.toLowerCase()}`)
         .then(data => data.json())
         .then(response => renderPokemonData(response))
+        .catch(err => renderNotFound())
 }
 
 const renderPokemonData= data =>{
@@ -44,6 +45,7 @@ const renderPokemonData= data =>{
     pokeId.textContent= `N° ${data.id}`;
     setCardColor(types);
     renderPokemonTypes(types);
+    renderPokemonStats(stats);
 }
 
 const setCardColor = types =>{
@@ -53,6 +55,35 @@ const setCardColor = types =>{
     pokeImg.style.backgroundSize= ' 5px, 5px';
 }
 
-/*renderPokemonTypes=types =>{
-    pokeTypes.innerHTML
-}*/
+renderPokemonTypes=types =>{
+    pokeTypes.innerHTML= '';
+    types.forEach(type =>{
+        const typeTextElement= document.createElement("div");
+        typeTextElement.style.color = typeColors[type.type.name];
+        typeTextElement.textContent = type.type.name;
+        pokeTypes.appendChild(typeTextElement);
+    });
+}
+
+const renderPokemonStats = stats =>{
+    pokeStats.innerHTML= '';
+    stats.forEach(stat => {
+        const statElement = document.createElement("div");
+        const statElementName= document.createElement("div");
+        const statElementAmount= document.createElement("div");
+        statElementName.textContent= stat.stat.name;
+        statElementAmount.textContent= stat.base_stat;
+        statElement.appendChild(statElementName);
+        statElement.appendChild(statElementAmount);
+        pokeStats.appendChild(statElement);
+    });
+}
+
+const renderNotFound = () =>{
+    pokeName.textContent = 'No encontrado';
+    pokeImg.setAttribute('src','poke-shadow.png');
+    pokeImg.style.background= '#fff';
+    pokeTypes.innerHTML= '';
+    pokeStats.innerHTML= '';
+    pokeImg.innerHTML='';
+}
